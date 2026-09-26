@@ -2,4 +2,4 @@ class MemberService {
   constructor() {}
 }
 
-export default MemberService
+export default MemberService;

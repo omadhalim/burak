@@ -1,13 +1,32 @@
+/* Project Standards:
+- Logging standards
+- Naming standards
+     function, method, variable => CAMEL    goHome
+     class => PASCAL                        MemberService
+     folder => KEBAB
+     css => SNAKE                           button_style
+
+- Error handling
+
+
+
+
+
+*/
+
+
+
+
 // Task - N
 
-function palindromCheck(str: string) {
-  let reversed = str.split("").reverse().join("");
+// function palindromCheck(str: string) {
+//   let reversed = str.split("").reverse().join("");
 
-  return str === reversed;
-}
+//   return str === reversed;
+// }
 
-console.log(palindromCheck("dad"));
-console.log(palindromCheck("hello"));
+// console.log(palindromCheck("dad"));
+// console.log(palindromCheck("hello"));
 
 
 
