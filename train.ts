@@ -1,3 +1,24 @@
+// Task - O
+
+function calculateSumOfNumbers(arr: any[]) {
+  let sum = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (typeof arr[i] === "number") {
+      sum += arr[i];
+    }
+  }
+
+  return sum;
+}
+
+console.log(
+  calculateSumOfNumbers([10, "10", { son: 10 }, true, 35])
+);
+
+
+
+
 /* Project Standards:
 - Logging standards
 - Naming standards
