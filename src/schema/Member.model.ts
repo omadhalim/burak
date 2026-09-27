@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import mopngoose, {Schema} from "mongoose";
 import { MemberStatus, memberType } from "../libs/types/enums/member.enum";
 
