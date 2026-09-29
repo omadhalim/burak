@@ -1,7 +1,7 @@
-import { MemberInput } from "../libs/types/member";
-
 import MemberModel from "../schema/Member.model";
-
+import { Member, MemberInput } from "../libs/types/member";
+import Errors, { HttpCode, Message } from "../libs/Errors";
+import { memberType } from "../libs/enums/member.enum";
 class MemberService {
   private readonly memberModel;
 
@@ -9,16 +9,20 @@ class MemberService {
     this.memberModel = MemberModel;
   }
 
-  public async processSignup(input: MemberInput): Promise<any> {
-    // const result = await this.memberModel.create(input);
+  public async processSignup(input: MemberInput): Promise<Member> {
+    const exist = await this.memberModel
+      .findOne({ memberType: memberType.RESTAURANT })
+      .exec();
 
-    const tempResult = new this.memberModel(input);
+    if (exist) throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
 
-    const result = await tempResult.save();
-
-    result.memberPassword = "";
-
-    return result;
+    try {
+      const result = await this.memberModel.create(input);
+      result.memberPassword = "";
+      return result;
+    } catch (err) {
+      throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
+    }
   }
 }
 

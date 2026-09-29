@@ -12,4 +12,4 @@ routerAdmin
 
 /* Product */
 /* User */
-export default routerAdmin;
+export default routerAdmin; 
