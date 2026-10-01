@@ -1,10 +1,18 @@
-// Task-P
+// Task-Q
 
-function objectToArray(obj: any) {
-  return Object.entries(obj);
+function hasProperty(obj: any, property: string): boolean {
+  return property in obj;
 }
 
-console.log(objectToArray({ a: 10, b: 20 }));
+console.log(hasProperty({ name: "BMW" }, "name"));
+
+// Task-P
+
+// function objectToArray(obj: any) {
+//   return Object.entries(obj);
+// }
+
+// console.log(objectToArray({ a: 10, b: 20 }));
 
 
 
