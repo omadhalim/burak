@@ -27,7 +27,7 @@ class MemberService {
 
       result.memberPassword = "";
 
-      return result.toJSON();
+      return result.toJSON(); 
     } catch (err) {
       console.error("Error, model:signup", err);
 
