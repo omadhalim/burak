@@ -29,7 +29,7 @@ app.use(morgan(MORGAN_FORMAT));
    session({
     secret: String(process.env.SESSION_SECRET),
     cookie: {
-       maxAge: 1000 * 3600 * 3, // 3h
+       maxAge: 1000 * 7400 * 3, // 6h
     },
     store: store,
     resave: true,
