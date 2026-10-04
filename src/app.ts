@@ -7,7 +7,6 @@ import { MORGAN_FORMAT } from "./libs/types/config";
 
 import session from "express-session";
 import ConnectMongoDB from "connect-mongodb-session";
-import ConnectMongoDBSession from "connect-mongodb-session";
 
 const MongoDBStore = ConnectMongoDB(session);
 const store = new MongoDBStore({
@@ -29,13 +28,13 @@ app.use(morgan(MORGAN_FORMAT));
    session({
     secret: String(process.env.SESSION_SECRET),
     cookie: {
-       maxAge: 1000 * 7400 * 3, // 6h
+       maxAge: 1000 * 3600 * 6, // 6h
     },
     store: store,
     resave: true,
     saveUninitialized: true
    })
- )
+ ); 
 
 
 
