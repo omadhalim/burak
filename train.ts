@@ -1,12 +1,29 @@
-// Task-Q
+// TASK- R
+function calculate(str: string): number {
+  const [a, operator, b] = str.split(" ");
 
-function hasProperty(obj: any, property: string): boolean {
-  return property in obj;
+  if (operator === "+") {
+    return Number(a) + Number(b);
+  }
+
+  return 0;
 }
 
-console.log(hasProperty({ name: "BMW" }, "name"));
+console.log(calculate("1 + 3")); 
 
-// Task-P
+
+
+
+
+// Task-Q
+
+// function hasProperty(obj: any, property: string): boolean {
+//   return property in obj;
+// }
+
+// console.log(hasProperty({ name: "BMW" }, "name"));
+
+// // Task-P
 
 // function objectToArray(obj: any) {
 //   return Object.entries(obj);
