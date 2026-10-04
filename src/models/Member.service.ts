@@ -1,11 +1,7 @@
 import MemberModel from "../schema/Member.model";
-
 import { Member, MemberInput, LoginInput } from "../libs/types/member";
-
 import Errors, { HttpCode, Message } from "../libs/Errors";
-
 import { memberType } from "../libs/enums/member.enum";
-
 import * as bcrypt from "bcryptjs";
 
 class MemberService {
@@ -16,21 +12,16 @@ class MemberService {
   }
 
   /** SPA */
-
   public async signup(input: MemberInput): Promise<Member> {
     const salt = await bcrypt.genSalt();
-
     input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
 
     try {
       const result = await this.memberModel.create(input);
-
       result.memberPassword = "";
-
-      return result.toJSON(); 
+      return result.toJSON();
     } catch (err) {
       console.error("Error, model:signup", err);
-
       throw new Errors(
         HttpCode.BAD_REQUEST,
         Message.USED_NICK_PHONE
@@ -40,7 +31,6 @@ class MemberService {
 
   public async login(input: LoginInput): Promise<Member> {
     // TODO: Consider member status later
-
     const member = await this.memberModel
       .findOne(
         {
@@ -79,14 +69,12 @@ class MemberService {
   }
 
   /** SSR */
-
   public async processSignup(input: MemberInput): Promise<Member> {
     const exist = await this.memberModel
       .findOne({
         memberType: memberType.RESTAURANT,
       })
       .exec();
-
     if (exist) {
       throw new Errors(
         HttpCode.BAD_REQUEST,
@@ -95,25 +83,19 @@ class MemberService {
     }
 
     console.log("before:", input.memberPassword);
-
     const salt = await bcrypt.genSalt();
-
     input.memberPassword = await bcrypt.hash(
       input.memberPassword,
       salt
     );
-
     console.log("after:", input.memberPassword);
 
     try {
       const result = await this.memberModel.create(input);
-
       result.memberPassword = "";
-
       return result;
     } catch (err) {
       console.log("CREATE ERROR:", err);
-
       throw new Errors(
         HttpCode.BAD_REQUEST,
         Message.CREATE_FAILED
