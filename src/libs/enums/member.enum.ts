@@ -1,4 +1,4 @@
-export enum memberType {
+export enum MemberType {
   USER = "USER",
   RESTAURANT = "RESTAURANT",
 }
