@@ -1,15 +1,34 @@
-// TASK- R
-function calculate(str: string): number {
-  const [a, operator, b] = str.split(" ");
+// S Task
 
-  if (operator === "+") {
-    return Number(a) + Number(b);
-  }
+function missingNumber(numbers: number[]): number {
+    for (let i = 0; i <= numbers.length; i++) {
+        if (!numbers.includes(i)) {
+            return i;
+        }
+    }
 
-  return 0;
+    return -1;
 }
 
-console.log(calculate("1 + 3")); 
+console.log(missingNumber([3, 0, 1]));
+
+console.log(missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1]));
+
+
+
+
+// TASK- R
+// function calculate(str: string): number {
+//   const [a, operator, b] = str.split(" ");
+
+//   if (operator === "+") {
+//     return Number(a) + Number(b);
+//   }
+
+//   return 0;
+// }
+
+// console.log(calculate("1 + 3")); 
 
 
 
