@@ -1,23 +1,24 @@
-import multer from "multer";
 import path from "path";
-import fs from "fs";
+import multer from "multer";
 import { v4 } from "uuid";
 
-const makeUploader = (address: string) => {
-  const dir = `./uploads/${address}`;
-  fs.mkdirSync(dir, { recursive: true });
-
-  const storage = multer.diskStorage({
+/** MULTER IMAGE UPLOADER **/
+function getTargetImageStorage(address: any) {
+  return multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, dir);
+      cb(null, `./uploads/${address}`);
     },
     filename: function (req, file, cb) {
       const extension = path.parse(file.originalname).ext;
-      cb(null, `${v4()}${extension}`);
+      const random_name = v4() + extension;
+      cb(null, random_name);
     },
   });
+}
 
-  return multer({ storage });
+const makeUploader = (address: string) => {
+  const storage = getTargetImageStorage(address);
+  return multer({ storage: storage });
 };
 
 export default makeUploader;
