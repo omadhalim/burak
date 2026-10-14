@@ -3,7 +3,7 @@ import { T } from "../libs/types/common";
 import MemberService from "../models/Member.service";
 import { AdminRequest, LoginInput, MemberInput } from "../libs/types/member";
 import { MemberType } from "../libs/enums/member.enum";
-import Errors, { Message } from "../libs/Errors";
+import Errors, { HttpCode, Message } from "../libs/Errors";
 
 const memberService = new MemberService();
 
@@ -56,7 +56,10 @@ restaurantController.processSignup = async (req: AdminRequest, res: Response) =>
     console.log("processSignup");
     const file =  req.file; // uploaded file from multer
     console.log("file:", file);
-    // throw new Error("Forced Quit"); // Force quit for testing
+    if (!file) 
+      throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG);
+    
+     
 
     const newMember: MemberInput = req.body;
     newMember.memberImage = req.file?.path; // uploaded image path
@@ -65,7 +68,7 @@ restaurantController.processSignup = async (req: AdminRequest, res: Response) =>
     const result = await memberService.processSignup(newMember);
     req.session.member = result;
     req.session.save(() => {
-      res.send(result);
+      res.redirect("/admin/product/all");
     });
   } catch (err) {
     console.log("Error, processSignup:", err);
@@ -81,7 +84,7 @@ restaurantController.processLogin = async (req: AdminRequest, res: Response) => 
 
     req.session.member = result;
     req.session.save(() => {
-      res.send(result);
+      res.redirect("/admin/product/all");
     });
   } catch (err) {
     console.log("Error, processLogin:", err);
