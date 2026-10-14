@@ -62,7 +62,7 @@ restaurantController.processSignup = async (req: AdminRequest, res: Response) =>
      
 
     const newMember: MemberInput = req.body;
-    newMember.memberImage = req.file?.path; // uploaded image path
+    newMember.memberImage = req.file?.path.replace(/\\/g, "/"); // uploaded image path
     newMember.memberType = MemberType.RESTAURANT;
 
     const result = await memberService.processSignup(newMember);

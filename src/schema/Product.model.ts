@@ -6,6 +6,11 @@ import {
   ProductVolume,
 } from "../libs/enums/product.enum";
 
+// Numeric enum: Object.values() also returns the keys, so keep numbers only
+const productVolumeValues = Object.values(ProductVolume).filter(
+  (value): value is number => typeof value === "number"
+);
+
 const productSchema = new Schema(
   {
     productStatus: {
@@ -27,8 +32,8 @@ const productSchema = new Schema(
       default: ProductSize.NORMAL,
     },
     productVolume: {
-      type: String,
-      enum: Object.values(ProductVolume),
+      type: Number,
+      enum: productVolumeValues,
       default: ProductVolume.ONE,
     },
     productDesc: { type: String, required: true },
