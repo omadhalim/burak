@@ -1,9 +1,21 @@
-// T Task
-function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
-  return [...arr1, ...arr2].sort((a, b) => a - b);
+// TASK - V
+
+
+function countChars(str: string): { [key: string]: number } {
+    const result: { [key: string]: number } = {};
+
+    for (const char of str) {
+        if (result[char]) {
+            result[char]++;
+        } else {
+            result[char] = 1;
+        }
+    }
+
+    return result;
 }
 
-console.log(mergeSortedArrays([0, 3, 4], [4, 6]));
+console.log(countChars("hello"));
 
 
 
@@ -11,7 +23,12 @@ console.log(mergeSortedArrays([0, 3, 4], [4, 6]));
 
 
 
+// T Task
+// function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
+//   return [...arr1, ...arr2].sort((a, b) => a - b);
+// }
 
+// console.log(mergeSortedArrays([0, 3, 4], [4, 6]));
 
 
 
