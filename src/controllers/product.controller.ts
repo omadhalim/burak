@@ -14,7 +14,7 @@ productController.getAllProducts = async (req:Request, res: Response) => {
     try {
         console.log("getAllProducts");
         const data = await productService.getAllProducts();
-        console.log("data:", data);
+        console.log("products:", data);
         
         res.render("products", { products: data });
     } catch (err) {
@@ -32,7 +32,7 @@ productController.createNewProduct = async (req: AdminRequest, res: Response) =>
        if (!req.files?.length)
         throw new Errors(HttpCode.INTERNAL_SERVER_ERROR, Message.CREATE_FAILED);
 
-       const data: ProductInput = req.body;
+       const data: ProductInput = req.body;    // Requestdan kelayotgan pathni olyapmiz
        data.productImages = req.files?.map(ele => {
        return ele.path.replace(/\\/g, "/");
        });
@@ -43,7 +43,7 @@ productController.createNewProduct = async (req: AdminRequest, res: Response) =>
        );
 
     } catch (err) {
-        console.log("Error, createNewProduct:", err);
+        console.log("Error, createNewProduct:", err);  
         const message = 
            err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
            res.send(
