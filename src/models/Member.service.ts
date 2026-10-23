@@ -1,7 +1,7 @@
 import MemberModel from "../schema/Member.model";
 import { LoginInput, Member, MemberInput, MemberUpdateInput } from "../libs/types/member";
 import Errors, { HttpCode, Message } from "../libs/Errors";
-import { MemberType } from "../libs/enums/member.enum";
+import { MemberStatus, MemberType } from "../libs/enums/member.enum";
 import * as bcrypt from "bcryptjs";
 import { shapeIntoMongooseObjectId } from "../libs/types/config";
 
@@ -25,7 +25,7 @@ class MemberService {
   }
 
   public async login(input: LoginInput): Promise<Member> {
-    // TODO: Consider member status later
+    
     return this.authenticate(input);
   }
 
@@ -59,13 +59,17 @@ class MemberService {
   private async authenticate(input: LoginInput): Promise<Member> {
     const member = await this.memberModel
       .findOne(
-        { memberNick: input.memberNick },
-        { memberNick: 1, memberPassword: 1 }
+        { memberNick: input.memberNick,
+          memberStatus: { $ne: MemberStatus.DELETE } 
+        },
+        { memberNick: 1, memberPassword: 1, memberStatus: 1}
       )
       .exec();
 
-    if (!member) {
-      throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_NICK);
+    if (!member) throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_NICK);
+      else if (member.memberStatus === MemberStatus.BLOCK) {
+        throw new Errors(HttpCode.FORBIDDEN, Message.BLOCKED_USER);
+      
     }
 
     const isMatch = await bcrypt.compare(
@@ -97,10 +101,11 @@ public async updateChosenUser(input: MemberUpdateInput): Promise<Member> {
   const result = await this.memberModel
     .findByIdAndUpdate(memberId, input, { new: true })
     .exec();
-  if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATED_FAILED);
+
+  if (!result) throw new Errors(HttpCode.BAD_REQUEST, Message.UPDATE_FAILED);
+
   return result as unknown as Member;
 }
-
 // function shapeIntoMongooseObjectId(_id: Schema.Types.ObjectId): Types.ObjectId {
 //   return new Types.ObjectId(_id.toString());
 // }
