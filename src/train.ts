@@ -1,17 +1,36 @@
+// Task - X
+
+function countOccurrences(obj: Record<string, unknown>, targetKey: string): number {
+    let count = 0;
+
+    for (const key in obj) {
+        if (key === targetKey) count++;
+
+        const value = obj[key];
+        if (typeof value === "object" && value !== null)
+            count += countOccurrences(value as Record<string, unknown>, targetKey);
+    }
+
+    return count;
+}
+
+console.log(countOccurrences({ model: "A", s: { model: "B" } }, "model")); 
+
+
 // Task - W
 
 
-function chunkArray(array: string | any[], size: number) {
-    const result = [];
+// function chunkArray(array: string | any[], size: number) {
+//     const result = [];
 
-    for (let i = 0; i < array.length; i += size) {
-        result.push(array.slice(i, i + size));
-    }
+//     for (let i = 0; i < array.length; i += size) {
+//         result.push(array.slice(i, i + size));
+//     }
 
-    return result;
-}
+//     return result;
+// }
 
-console.log(chunkArray([1, 2, 3, 4, 5], 2));
+// console.log(chunkArray([1, 2, 3, 4, 5], 2));
 
 
 
