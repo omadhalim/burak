@@ -1,20 +1,29 @@
-// Task - X
-
-function countOccurrences(obj: Record<string, unknown>, targetKey: string): number {
-    let count = 0;
-
-    for (const key in obj) {
-        if (key === targetKey) count++;
-
-        const value = obj[key];
-        if (typeof value === "object" && value !== null)
-            count += countOccurrences(value as Record<string, unknown>, targetKey);
-    }
-
-    return count;
+// Task - Y
+function findIntersection(arr1: number[], arr2: number[]): number[] {
+  return arr1.filter((num) => arr2.includes(num)).filter(
+    (num, index, arr) => arr.indexOf(num) === index
+  );
 }
 
-console.log(countOccurrences({ model: "A", s: { model: "B" } }, "model")); 
+console.log(findIntersection([1, 2, 3], [3, 2, 0])); 
+
+// Task - X
+
+// function countOccurrences(obj: Record<string, unknown>, targetKey: string): number {
+//     let count = 0;
+
+//     for (const key in obj) {
+//         if (key === targetKey) count++;
+
+//         const value = obj[key];
+//         if (typeof value === "object" && value !== null)
+//             count += countOccurrences(value as Record<string, unknown>, targetKey);
+//     }
+
+//     return count;
+// }
+
+// console.log(countOccurrences({ model: "A", s: { model: "B" } }, "model")); 
 
 
 // Task - W
