@@ -1,11 +1,21 @@
-// Task - Y
-function findIntersection(arr1: number[], arr2: number[]): number[] {
-  return arr1.filter((num) => arr2.includes(num)).filter(
-    (num, index, arr) => arr.indexOf(num) === index
-  );
+// Task-Z
+
+function sumEvens(arr: number[]): number {
+  return arr
+    .filter((num) => num % 2 === 0)
+    .reduce((sum, num) => sum + num, 0);
 }
 
-console.log(findIntersection([1, 2, 3], [3, 2, 0])); 
+console.log(sumEvens([1, 2, 3])); 
+
+// Task - Y
+// function findIntersection(arr1: number[], arr2: number[]): number[] {
+//   return arr1.filter((num) => arr2.includes(num)).filter(
+//     (num, index, arr) => arr.indexOf(num) === index
+//   );
+// }
+
+// console.log(findIntersection([1, 2, 3], [3, 2, 0])); 
 
 // Task - X
 
