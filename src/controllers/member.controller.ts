@@ -3,9 +3,11 @@ import { T } from "../libs/types/common";
 import MemberService from "../models/Member.service";
 import { Member, MemberInput, LoginInput } from "../libs/types/member";
 import Errors, { HttpCode } from "../libs/Errors";
+import AuthService from "../models/Auth.service"; 
 
 // React
  const memberService = new MemberService();
+ const authService = new AuthService();
 
 const memberController: T = {};
 
@@ -15,9 +17,9 @@ memberController.signup = async (req: Request, res: Response
     console.log("signup");
     const input: MemberInput = req.body,
      result: Member = await memberService.signup(input);
-    // TODO TOKENS AUTHENTICATION
-
-    res.json({member: result});
+    const token = await authService.createToken(result);
+    console.log("token =>", token);
+    res.json({ member: result});
   } catch (err) {
     console.log("Error, signup:", err);
     if(err instanceof Errors) res.status(err.code).json(err);
@@ -32,9 +34,11 @@ memberController.login = async (req: Request, res: Response) => {
     console.log("login");
     console.log("body:", req.body);
     const input: LoginInput = req.body;
-    const result = await memberService.login(input);
-    // keyin token va javob...
-    res.status(HttpCode.OK).json({ member: result });
+     const result = await memberService.login(input);
+    const token = await authService.createToken(result);
+    console.log("token =>", token);
+    
+    res.json({ member: result });
   } catch (err) {
     console.log("Error, login:", err);
     if (err instanceof Errors) res.status(err.code).json(err);
