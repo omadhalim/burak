@@ -1,7 +1,7 @@
 import express from "express";
 import restaurantController from "./controllers/restaurant.controller";
 import productController from "./controllers/product.controller";
-import makeUploader from "./utils/uploader";
+import makeUploader from "./libs/utils/uploader";
 const routerAdmin = express.Router();
 
 /** Restaurant */
