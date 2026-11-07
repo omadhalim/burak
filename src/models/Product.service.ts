@@ -10,9 +10,19 @@ import ProductModel from "../schema/Product.model";
 import { ProductStatus } from "../libs/enums/product.enum";
 import { T } from "../libs/types/common";
 import { ObjectId } from "mongoose";
+import ViewService from "./View.service";
+import { ViewInput } from "../libs/types/view";
+import { ViewGroup } from "../libs/enums/view.enum";
 
 class ProductService {
   private readonly productModel = ProductModel;
+  public viewService;
+
+
+  constructor() {
+    this.productModel = ProductModel;
+    this.viewService = new ViewService();
+  }
 
   /** SPA */
  public async getProducts(inquiry: ProductInquiry): Promise<Product[]> {
@@ -60,7 +70,30 @@ public async getProduct(
 
   if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
 
-  // TODO: If authenticated users => first => view log creation
+  console.log("memberId:", memberId);
+  if (memberId) {
+    const input: ViewInput = {
+      memberId: memberId,
+      viewRefId: productId,
+      viewGroup: ViewGroup.PRODUCT,
+    };
+
+    const existView = await this.viewService.checkViewExistence(input);
+    console.log("existView:", !!existView);
+
+    if (!existView) {
+      await this.viewService.insertMemberView(input);
+
+      // Increase Counts
+      result = await this.productModel
+        .findByIdAndUpdate(
+          productId,
+          { $inc: { productViews: 1 } },
+          { new: true }
+        )
+        .exec();
+    }
+  }
 
   return result as unknown as Product;
 }
@@ -68,8 +101,8 @@ public async getProduct(
   /** SSR */
 
   public async getAllProducts(): Promise<Product[]> {
-    const result = await this.productModel
-      .find().exec();
+    const result = await this.productModel.find().exec();
+
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
 
     return result as unknown as Product[];
