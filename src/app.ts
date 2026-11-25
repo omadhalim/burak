@@ -20,16 +20,16 @@ const store = new MongoDBStore({
 /** 1-entrance **/
 const app = express();
 console.log("__dirname:", __dirname);
-app.use(express.static(path.join(__dirname,"public")));
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads"))); // <-- shu qator
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
 app.use(
   cors({
     origin: true,
     credentials: true
   })
 );
+app.use(express.static(path.join(__dirname,"public")));
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads"))); // <-- shu qator
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 app.use(cookieParser());
 app.use(morgan(MORGAN_FORMAT));
 
