@@ -3,4 +3,9 @@ dist
 
 .env
 
-uploads
+# old member photos not used by any account (kept locally only)
+uploads/members/1488cc68-4ca4-43d6-8e26-769fe921cfb5.jpg
+uploads/members/2a2c03e1-5527-4350-9c43-d4447e84e9de.jpg
+uploads/members/3d092490-2d54-4317-b044-055d806f459b.jpg
+uploads/members/bc0319a0-43d2-45b4-8fbd-2df845b1e154.jpg
+uploads/members/f7021b97-ffbd-4415-b67b-fa45ab69b8b2.jpg
